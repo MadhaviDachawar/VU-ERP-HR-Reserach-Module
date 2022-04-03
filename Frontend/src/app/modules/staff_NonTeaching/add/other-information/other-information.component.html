@@ -1,0 +1,41 @@
+<form [formGroup]="OtherInformation">
+    <!-- MoreInformation -->
+    <div style="padding-top: 20px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <table [fxFlex]="100 + '%'" fxFlex.lt-md="100%" mat-table [dataSource]="IDMOVGIDataSource" class="mat-elevation-z0">
+            <ng-container matColumnDef="InsuranceDetails">
+                <th style="text-align: center" mat-header-cell *matHeaderCellDef>
+                    <b>INSURANCE DETAILS</b>
+                </th>
+                <td style="text-align: center" mat-cell *matCellDef="let element">
+                    <mat-slide-toggle [formControl]="accidentClaim" [checked]="accidentClaim.value" style="padding: 0 5px 0 5px">
+                        Accident Claim</mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="mediClaim" [checked]="mediClaim.value" style="padding: 0 5px 0 5px">
+                        MediClaim</mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="termInsurance" [checked]="termInsurance.value" style="padding: 0 5px 0 5px">
+                        Term Insurance</mat-slide-toggle>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="MemberOfVUGroupInsurance">
+                <th style="text-align: center" mat-header-cell *matHeaderCellDef>
+                    <b>MEMBER OF VU GROUP INSURANCE</b>
+                </th>
+                <td style="text-align: center" mat-cell *matCellDef="let element">
+                    <mat-slide-toggle [formControl]="VUAccidentClaim" [checked]="VUAccidentClaim.value" style="padding: 0 5px 0 5px">
+                        Accident Claim</mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="VUMediClaim" [checked]="VUMediClaim.value" style="padding: 0 5px 0 5px">
+                        MediClaim</mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="VUTermInsurance" [checked]="VUTermInsurance.value" style="padding: 0 5px 0 5px">
+                        Term Insurance</mat-slide-toggle>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="IDMOVGICols"></tr>
+            <tr mat-row *matRowDef="let row; columns: IDMOVGICols"></tr>
+        </table>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+        <button mat-button matStepperPrevious>Back</button>
+    </div>
+</form>

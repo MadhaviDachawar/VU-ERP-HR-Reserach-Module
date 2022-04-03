@@ -1,0 +1,215 @@
+<div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+    <form [formGroup]="CoreInformation">
+        <div class="mat-elevation-z0" [fxFlex]="100 + '%'" fxFlex.lt-md="100%">
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 7 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Employee Number</mat-label>
+                    <input mask="00000" id="employmentNumber" matInput placeholder="Employee Number" formControlName="employmentNumber" required />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Staff</mat-label>
+                    <input #department type="text" aria-label="Number" matInput formControlName="staff" [matAutocomplete]="auto" required>
+                    <button *ngIf="this.CoreInformation.controls.staff.value.length > 0" matSuffix mat-icon-button (click)="resetDepartment()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredDepartments | async" [value]="option.name">
+                            {{option.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Section</mat-label>
+                    <input #department type="text" aria-label="Number" matInput formControlName="department" [matAutocomplete]="auto" required>
+                    <button *ngIf="this.CoreInformation.controls.section.value.length > 0" matSuffix mat-icon-button (click)="resetDepartment()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredDepartments | async" [value]="option.name">
+                            {{option.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Joining Date</mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="joiningDate" required />
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Date of Releiving, if applicable </mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="ReleivingDate" required />
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Remark</mat-label>
+                    <input mask="00000" id="remark" matInput placeholder="remark" formControlName="remark" />
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<form [formGroup]="NameDetails">
+    <div>
+        <div fxLayout="row wrap" fxLayoutGap="5px grid" fxLayoutAlign="center">
+            <div class="mat-elevation-z0" [fxFlex]="50 + '%'" fxFlex.lt-md="50%">
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <H3><b>Name at the time of joining VU</b></H3>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="AtVu_FirstName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="AtVu_MiddleName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="AtVu_LastName" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="mat-elevation-z0" [fxFlex]="50 + '%'" fxFlex.lt-md="50%">
+                <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <H3><b>Earlier Name, if any, before joining VU</b></H3>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="Earlier_FirstName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="Earlier_MiddleName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="Earlier_LastName" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div style="padding-top: 20px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+            <div class="mat-elevation-z0" [fxFlex]="50 + '%'" fxFlex.lt-md="50%">
+                <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <H3><b>Change in Name, if any, before joining VU</b></H3>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="Change_before_FirstName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="Change_before_MiddleName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="Change_before_LastName" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="mat-elevation-z0" [fxFlex]="50 + '%'" fxFlex.lt-md="50%">
+                <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <H3><b>
+                            Change in Name, if any, after joining VU
+                        </b></H3>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="Change_after_FirstName" />
+                    </mat-form-field>
+
+                    <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="Change_after_MiddleName" />
+                    </mat-form-field>
+                    <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="Change_after_LastName" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+<div style="padding-top: 20px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+    <form [formGroup]="DesignationDetailsForm">
+        <div class="mat-elevation-z0" [fxFlex]="100 + '%'" fxFlex.lt-md="100%">
+            <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>Designation</b></H3>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Joining Designation</mat-label>
+                    <mat-select formControlName="joiningDesignation">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let designation of designations" [value]="designation" required>
+                            {{ designation }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>From Date</mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="StartDate" required />
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="EndDate" required />
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Designation Roles</mat-label>
+                    <input matInput formControlName="Designation_Role" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>From Date</mat-label>
+                    <input matInput [matDatepicker]="dp2" formControlName="Designation_Role_Start_Date" required />
+                    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                    <mat-datepicker #dp2></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="dp3" formControlName="Designation_Role_End_Date" required />
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </div>
+    </form>
+</div>
+<br>

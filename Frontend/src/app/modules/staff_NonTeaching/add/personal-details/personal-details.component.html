@@ -1,0 +1,221 @@
+<form [formGroup]="PersonalDetails">
+    <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+            <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="dateOfBirth" required />
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Blood Group</mat-label>
+                <mat-select formControlName="bloodGroup" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let bloodgroup of BloodGroups" [value]="bloodgroup" required>
+                        {{ bloodgroup }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender" required>
+                    <mat-option>--</mat-option>
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Religion</mat-label>
+                <mat-select formControlName="religion" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let religion of religions" [value]="religion" required>
+                        {{ religion }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let category of categories" [value]="category" required>
+                        {{ category }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Caste</mat-label>
+                <input matInput formControlName="caste" required />
+            </mat-form-field>
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Caste Validity</mat-label>
+                <input matInput formControlName="castevalidity" required />
+            </mat-form-field>
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Creamy Layer, if applicable, with validity period </mat-label>
+                <input matInput formControlName="creamylayer" required />
+            </mat-form-field>
+
+            <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Marital Status</mat-label>
+                <mat-select formControlName="maritalStatus" required>
+                    <mat-option>--</mat-option>
+                    <mat-option value="Married">Married</mat-option>
+                    <mat-option value="Un-Married">Un-Married</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- Children Details -->
+
+        <div style="padding-top: 20px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+            <div class="mat-elevation-z0" [fxFlex]="100 + '%'" fxFlex.lt-md="100%">
+                <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <H3><b>If Married, NO. Of Children</b></H3>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                    <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Male</mat-label>
+                        <mat-select formControlName="noOfChildrenMale" required>
+                            <mat-option>--</mat-option>
+                            <mat-option value="0">0</mat-option>
+                            <mat-option value="1">1</mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                            <mat-option value="5">5</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                        <mat-label>Female</mat-label>
+                        <mat-select formControlName="noOfChildrenFemale" required>
+                            <mat-option>--</mat-option>
+                            <mat-option value="0">0</mat-option>
+                            <mat-option value="1">1</mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                            <mat-option value="5">5</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<br>
+<!-- <div fxLayout="row wrap" fxLayoutGap="5px grid" fxLayoutAlign="center">
+    <form [formGroup]="EmergencyDetailsForm">
+        <mat-card class="mat-elevation-z0" [fxFlex]="50 + '%'" fxFlex.lt-md="50%">
+            <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>Emergency Contact Details</b></H3>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Name (Relation with employee) </mat-label>
+                    <input matInput formControlName="Name" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Mobile No</mat-label>
+                    <input matInput formControlName="Mobile" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="Address" />
+                </mat-form-field>
+            </div>
+        </mat-card>
+    </form>
+    <form [formGroup]="NomineeDetailsForm">
+        <mat-card class="mat-elevation-z0" [fxFlex]="50 + '%'" fxFlex.lt-md="50%">
+
+            <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>Nominee Details</b></H3>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Name (Relation with employee) </mat-label>
+                    <input matInput formControlName="NomineeName" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="NomineeAddress" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Contact No.</mat-label>
+                    <input matInput formControlName="NomineeMobile" />
+                </mat-form-field>
+            </div>
+
+            <div style="padding-top: 25px" fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-card>
+    </form>
+</div> -->
+
+<div fxLayout="row wrap" fxLayoutGap="5px grid" fxLayoutAlign="center">
+    <div class="mat-elevation-z0" [fxFlex]="45 + '%'" fxFlex.lt-md="45%">
+        <form [formGroup]="EmergencyDetailsForm">
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>Emergency Contact Details</b></H3>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Name (Relation with employee) </mat-label>
+                    <input matInput formControlName="Name" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Mobile No</mat-label>
+                    <input matInput formControlName="Mobile" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="Address" />
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div class="mat-elevation-z0" style="margin-left: 10px;" [fxFlex]="45 + '%'" fxFlex.lt-md="45%">
+        <form [formGroup]="EmergencyDetailsForm">
+
+            <div style="margin: 10px" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>Nominee Details </b></H3>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Name (Relation with employee) </mat-label>
+                    <input matInput formControlName="NomineeName" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="NomineeAddress" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 3 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Contact No.</mat-label>
+                    <input matInput formControlName="NomineeMobile" />
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+</div>

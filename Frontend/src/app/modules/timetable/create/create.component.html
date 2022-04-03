@@ -1,0 +1,123 @@
+<div cdkDropListGroup style="overflow: auto" [fxFlex]="100+'%'" fxLayoutGap="10px grid" fxLayout="row wrap"
+    fxLayoutAlign="center center">
+
+    <mat-card [fxFlex]="90 + '%'" fxLayout="row wrap" fxLayoutAlign="center center"
+        style="margin: 10px; margin-top: 30px;" class="mat-elevation-z4">
+
+        <h3 style="margin-top: 10px; text-align: center" [fxFlex]="100+'%'"> <b>COURSES</b></h3>
+
+        <div [fxFlex]="95 +'%'">
+            <div cdkDropList [cdkDropListData]="todo" cdkDropListOrientation="horizontal" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; padding-top: 15px;" [fxFlex]="100+'%'"> <b>ADD TIME SLOT</b></h3>
+        <form [formGroup]="addSlotForm" fxLayoutAlign="center center">
+
+            <mat-form-field style="padding: 0px 5px 0px 5px; width: 150px;" fxFlex.xs="100%" fxFlex.sm="33%"
+                appearance="outline">
+                <mat-label>Time From</mat-label>
+                <input id="timeTo" style="text-align: center;" matInput type="time" placeholder="Surname"
+                    formControlName="timeFrom" required />
+            </mat-form-field>
+
+            <mat-form-field style="padding: 0px 5px 0px 5px; width: 150px;" fxFlex.xs="100%" fxFlex.sm="33%"
+                appearance="outline">
+                <mat-label>Time To</mat-label>
+                <input id="timeFrom" style="text-align: center;" matInput type="time" placeholder="Surname"
+                    formControlName="timeTo" required />
+            </mat-form-field>
+
+            <button type="button" (click)="addSlot()" style="position: relative; top: -5px;" mat-icon-button
+                color="accent">
+                <mat-icon fontSet="material-icons-outlined">add_circle</mat-icon>
+            </button>
+
+        </form>
+    </mat-card>
+
+    <mat-card *ngIf="dataSource.data.length > 0" [fxFlex]="90 + '%'" fxLayout="row wrap" fxLayoutAlign="center center"
+        style="margin: 10px; margin-top: 30px;" class="mat-elevation-z4">
+        <table style="width: 100%;" mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="time">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> TIME </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element"> {{element.time}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="monday">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> MONDAY </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element">
+                    <div cdkDropList [cdkDropListData]="element.monday" class="example-tt-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-tt-box" *ngFor="let item of element.monday" cdkDrag>{{item}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tuesday">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> TUESDAY </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element">
+                    <div cdkDropList [cdkDropListData]="element.tuesday" class="example-tt-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-tt-box" *ngFor="let item of element.tuesday" cdkDrag>{{item}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="wednesday">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> WEDNESDAY </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element">
+                    <div cdkDropList [cdkDropListData]="element.wednesday" class="example-tt-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-tt-box" *ngFor="let item of element.wednesday" cdkDrag>{{item}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="thursday">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> THURSDAY </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element">
+                    <div cdkDropList [cdkDropListData]="element.thursday" class="example-tt-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-tt-box" *ngFor="let item of element.thursday" cdkDrag>{{item}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="friday">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> FRIDAY </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element">
+                    <div cdkDropList [cdkDropListData]="element.friday" class="example-tt-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-tt-box" *ngFor="let item of element.friday" cdkDrag>{{item}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="saturday">
+                <th style="text-align: center; width: 150px;" mat-header-cell *matHeaderCellDef> SATURDAY </th>
+                <td style="text-align: center; width: 150px;" mat-cell *matCellDef="let element">
+                    <div cdkDropList [cdkDropListData]="element.saturday" class="example-tt-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-tt-box" *ngFor="let item of element.saturday" cdkDrag>{{item}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <th style="width: 50px; text-align: center;" mat-header-cell *matHeaderCellDef><b>DELETE</b></th>
+                <td style="width: 50px; text-align: center;" mat-cell *matCellDef="let element">
+                    <button (click)="delete(element.timeFrom)" mat-icon-button color="warn">
+                        <mat-icon fontSet="material-icons-round">delete_forever</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card>
+</div>

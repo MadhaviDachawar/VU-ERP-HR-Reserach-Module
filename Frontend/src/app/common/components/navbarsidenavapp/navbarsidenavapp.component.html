@@ -1,0 +1,90 @@
+<div class="example-container" style="background-color: #ffffff">
+	<mat-toolbar style="background-color: #ffffff">
+		<mat-toolbar-row>
+			<button (click)="snav.toggle()" mat-icon-button class="example-icon">
+				<mat-icon fontSet="material-icons-outlined">menu</mat-icon>
+			</button>
+
+			<img *ngIf="(orientation | async)!" src="/assets/logo.png"
+            style="background-color: white; height: 40px; z-index: 100; margin-left: 10px; margin-left: 10px; margin-right: 10px;">
+
+            <img *ngIf="!(orientation | async)!" src="/assets/mobileLogo.png"
+            style="background-color: white; height: 40px; z-index: 100; margin-left: 10px; margin-left: 10px; margin-right: 10px;">
+
+			<span style="margin-left: 10px;"> {{pageName}} </span>
+
+			<span class="example-spacer"></span>
+
+			<button mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+				<span *ngIf="(orientation | async)!">
+					Welcome, {{name}}
+					&nbsp;</span>
+				<mat-icon fontSet="material-icons-round">account_circle</mat-icon>
+			</button>
+            
+			<mat-menu class="profileMenu" #menu="matMenu">
+				<button mat-menu-item (click)="editProfile()" class="example-icon">
+					<mat-icon fontSet="material-icons-round">manage_accounts</mat-icon>
+					<span>View/Edit Profile</span>
+				</button>
+				<button mat-menu-item (click)="logout()" class="example-icon">
+					<mat-icon fontSet="material-icons-outlined">settings</mat-icon>
+					<span>Settings</span>
+				</button>
+				<button mat-menu-item (click)="logout()" class="example-icon">
+					<mat-icon fontSet="material-icons-outlined">logout</mat-icon>
+					<span>Logout</span>
+				</button>
+			</mat-menu>
+		</mat-toolbar-row>
+	</mat-toolbar>
+    <img src="/assets/vuStrip.png" style="width: 100%;">
+	<mat-sidenav-container [hasBackdrop]="true" class="example-sidenav-container" autosize style="background-color: #ffffff">
+		<mat-sidenav class="sideNav" #snav [mode]="mode.value" [(opened)]="SideNavOpen">
+			<mat-nav-list>
+
+				<mat-accordion #accordion>
+
+					<ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: navList }"></ng-container>
+
+					<ng-template #recursiveListTmpl let-list="list">
+
+						<ng-container *ngFor="let navItem of list">
+
+							<a *ngIf="navItem.children == (null || undefined) && (navItem.allowedUserTypes.includes(this.userType) == true || navItem.allowedUserTypes.length == 0)"
+								mat-list-item (click)="redirectTo(navItem.route)">
+								<mat-icon style="margin: 0 10px 0 8px" fontSet="material-icons-outlined">
+									{{navItem.icon}}</mat-icon>
+								{{navItem.name}}
+							</a>
+
+							<mat-expansion-panel
+								*ngIf="navItem.children != (null || undefined) && (navItem.allowedUserTypes.includes(this.userType) == true || navItem.allowedUserTypes.length == 0)"
+								class="mat-elevation-z0">
+								<mat-expansion-panel-header>
+									<mat-panel-title>
+										<mat-icon style="margin-right: 10px" fontSet="material-icons-outlined">
+											{{navItem.icon}}
+										</mat-icon>
+										{{navItem.name}}
+									</mat-panel-title>
+								</mat-expansion-panel-header>
+
+								<ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: navItem.children }">
+								</ng-container>
+
+							</mat-expansion-panel>
+
+						</ng-container>
+
+					</ng-template>
+
+				</mat-accordion>
+
+			</mat-nav-list>
+		</mat-sidenav>
+		<mat-sidenav-content style="background-color: #ffffff;">
+			<router-outlet></router-outlet>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

@@ -1,0 +1,122 @@
+<div class="normalContainer" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center center">
+    <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+        <mat-label>Search</mat-label>
+        <input (input)="filterTree()" matInput placeholder="" id="treeFilter" [formControl]="treeFilter">
+        <mat-hint></mat-hint>
+    </mat-form-field>
+
+    <mat-checkbox matTooltip="Show disabled Faculties, Schools, Departments & Programmes" fxFlex.xs="40%" fxFlex.sm="33%">Show disabled</mat-checkbox>
+
+    <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="center">
+        <button (click)="expandAll()" style="width: 120px; height: 3rem; margin-right: 3px; margin-left: 3px;" mat-raised-button color="primary">Expand All
+            <mat-icon style="position:relative; top: -1px;" fontSet="material-icons-round">unfold_more</mat-icon>
+        </button>
+        <button (click)="collapseAll()" style="width: 120px; height: 3rem; margin-right: 3px; margin-left: 3px;" mat-raised-button color="warn">Collapse All
+            <mat-icon style="position:relative; top: -1px;" fontSet="material-icons-round">unfold_less</mat-icon>
+        </button>
+    </div>
+
+</div>
+
+<div class="normalContainer">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+        <mat-tree-node style="padding: 10px 30px 10px 30px;" *matTreeNodeDef="let node;" matTreeNodeToggle>
+            <span>
+                <b>
+                    {{node.type | uppercase}}: {{node.name}}
+                </b>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <button style="margin: 2px;" mat-icon-button color="accent" matTooltip="Edit" (click)="edit(node)">
+                    <mat-icon class="material-icons-two-tone">edit</mat-icon>
+                </button>
+
+                <button style="margin: 2px;" mat-icon-button color="warn" matTooltip="Disable" (click)="disable(node)">
+                    <mat-icon class="material-icons-two-tone">block</mat-icon>
+                </button>
+
+                <br>
+                <ng-container *ngFor="let element of getObjectEntries(node)">
+                    <ng-container *ngIf="!!element[1] && element[1].toString().length != 0 && element[0]!='children'">
+                        <span *ngIf="element[0]!='duration'" style="font-size: 12px;">
+                            {{element[0] | titlecase}}: {{element[1]}}
+                        </span>
+            <span *ngIf="element[0]=='duration'" style="font-size: 12px;">
+                            {{element[0] | titlecase}}: {{element[1]}} Years
+                        </span>
+            <br>
+            </ng-container>
+            </ng-container>
+            </span>
+        </mat-tree-node>
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+            <div style="padding: 10px 0px 10px 0;" class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon *ngIf="treeControl.isExpanded(node)" matTooltip="Collapse" class="mat-icon-rtl-mirror">
+                        expand_more
+                    </mat-icon>
+                    <mat-icon *ngIf="!treeControl.isExpanded(node)" matTooltip="Expand" class="mat-icon-rtl-mirror">
+                        chevron_right
+                    </mat-icon>
+                </button>
+                <span>
+                    <b>
+                        {{node.type | uppercase}}: {{node.name}} ({{node.children.length}})
+                    </b>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <button style="margin: 2px;" mat-icon-button color="primary" matTooltip="Add" (click)="add(node)">
+                        <mat-icon class="material-icons-two-tone">add</mat-icon>
+                    </button>
+
+                    <button style="margin: 2px;" mat-icon-button color="accent" matTooltip="Edit" (click)="edit(node)">
+                        <mat-icon class="material-icons-two-tone">edit</mat-icon>
+                    </button>
+
+                    <button style="margin: 2px;" mat-icon-button color="warn" matTooltip="Disable"
+                        (click)="disable(node)">
+                        <mat-icon class="material-icons-two-tone">block</mat-icon>
+                    </button>
+
+                    <br>
+                    <ng-container *ngFor="let element of getObjectEntries(node)">
+                        <ng-container
+                            *ngIf="!!element[1] && element[1].toString().length != 0 && element[0]!='children'">
+                            <span style="font-size: 12px;">
+                                {{element[0] | titlecase}}: {{element[1]}}
+                            </span>
+                <br>
+                </ng-container>
+                </ng-container>
+                </span>
+            </div>
+
+            <div [class.example-tree-invisible]=" !treeControl.isExpanded(node)" role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+        </mat-nested-tree-node>
+
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: isLastChild">
+            <table style="width:50%">
+                <tr>
+                    <ng-container *ngFor="let element of displayedColumns">
+                        <th>
+                            {{element}}
+                        </th>
+                    </ng-container>
+                </tr>
+                <tr>
+                    <ng-container *ngFor="let element of getHeaderForTable(node)">
+                        <td style="font-size: 12px;">
+                            {{element[1]}}
+                        </td>
+                    </ng-container>
+                </tr>
+            </table>
+            <br>
+        </mat-nested-tree-node>
+
+    </mat-tree>
+</div>

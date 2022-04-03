@@ -1,0 +1,68 @@
+<div class="example-container" style="background-color: white;">
+    <mat-toolbar style="background-color: white;">
+        <img *ngIf="(orientation | async)!" src="/assets/logo.png"
+            style="background-color: white; height: 40px; z-index: 100; margin-left: 10px; margin-left: 10px; margin-right: 10px;">
+
+        <img *ngIf="!(orientation | async)!" src="/assets/mobileLogo.png"
+            style="background-color: white; height: 40px; z-index: 100; margin-left: 10px; margin-left: 10px; margin-right: 10px;">
+
+        <span>VU - ERP</span>
+    </mat-toolbar>
+    <img src="/assets/vuStrip.png" style="width: 100%;">
+
+    <mat-grid-list cols="1" rowHeight="100%">
+        <mat-grid-tile>
+            <mat-card class="mat-elevation-z10 card">
+                <form [formGroup]="LoginForm" class="login-form" #loginForm="ngForm">
+                    <table class="example-full-width" cellspacing="10">
+                        <tr>
+                            <td>
+                                <mat-label><b>LOGIN</b></mat-label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Username</mat-label>
+                                    <input (blur)="usernameBlur()" matInput placeholder="" name="userName" id="userName"
+                                        formControlName="userName" required>
+                                    <mat-icon fontSet="material-icons-sharp" matSuffix>person</mat-icon>
+                                    <mat-hint></mat-hint>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input formControlName="password" (keydown)="PasswordOnEnter($event)" matInput
+                                        [type]="hide ? 'password' : 'text'" name="password" id="password" required>
+                                    <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon fontSet="material-icons-outlined">{{hide ? 'visibility_off' :
+                                            'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-hint></mat-hint>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <button [disabled]="!LoginForm.valid" id="loginButton" (click)="login()"
+                                    mat-raised-button color="primary">Login
+                                    <mat-icon fontSet="material-icons-outlined">login</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <button (click)="goToResetPassword()" id="resetPassword" mat-button color="warn">Forgot
+                                    Password?</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

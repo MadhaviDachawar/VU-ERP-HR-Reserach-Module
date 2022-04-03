@@ -1,0 +1,118 @@
+<form [formGroup]="CoreInformation">
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>SRN Number</mat-label>
+            <input id="srnNumber" matInput placeholder="SRN Number" mask="000000000" formControlName="srnNumber"
+                required />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>PRN Number</mat-label>
+            <input matInput placeholder="PRN Number" mask="0000000000" formControlName="prnNumber" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input mask="S*" matInput style="text-transform: capitalize;" placeholder="First Name"
+                formControlName="firstName" required
+                (change)="this.CoreInformation.controls.firstName.patchValue(this.CoreInformation.controls.firstName.value.charAt(0).toUpperCase() + this.CoreInformation.controls.firstName.value.slice(1))" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Middle Name</mat-label>
+            <input mask="S*" matInput style="text-transform: capitalize;" placeholder="Middle Name"
+                formControlName="middleName"
+                (change)="this.CoreInformation.controls.middleName.patchValue(this.CoreInformation.controls.middleName.value.charAt(0).toUpperCase() + this.CoreInformation.controls.middleName.value.slice(1))" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input mask="S*" matInput style="text-transform: capitalize;" placeholder="Surname"
+                formControlName="lastName" required
+                (change)="this.CoreInformation.controls.lastName.patchValue(this.CoreInformation.controls.lastName.value.charAt(0).toUpperCase() + this.CoreInformation.controls.lastName.value.slice(1))" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="dateOfBirth" formControlName="dateOfBirth" required />
+            <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+            <mat-datepicker #dateOfBirth></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Admission Date</mat-label>
+            <input matInput [matDatepicker]="admissionDate" formControlName="admissionDate" required />
+            <mat-datepicker-toggle matSuffix [for]="admissionDate"></mat-datepicker-toggle>
+            <mat-datepicker #admissionDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Candidate Qualifying Marksheet Name</mat-label>
+            <input matInput style="text-transform: uppercase;" placeholder=""
+                formControlName="candidateQualifyingMarksheetName" required
+                (change)="this.CoreInformation.controls.candidateQualifyingMarksheetName.patchValue(this.CoreInformation.controls.candidateQualifyingMarksheetName.value.toUpperCase())" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Candidate Qualifying Marksheet Name (Devnagri)</mat-label>
+            <input matInput style="text-transform: uppercase;" placeholder=""
+                formControlName="candidateQualifyingMarksheetNameDevnagiri" required
+                (change)="this.CoreInformation.controls.candidateQualifyingMarksheetNameDevnagiri.patchValue(this.CoreInformation.controls.candidateQualifyingMarksheetNameDevnagiri.value.toUpperCase())" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Programme</mat-label>
+            <input #programme type="text" aria-label="Number" matInput formControlName="programme"
+                [matAutocomplete]="auto" required>
+            <button *ngIf="this.CoreInformation.controls.programme.value.length > 0" matSuffix mat-icon-button
+                (click)="resetProgramme()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredProgrammes | async" [value]="option.name">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Admission into Year</mat-label>
+            <mat-select formControlName="admissionIntoYear">
+                <mat-option *ngFor="let year of years; let i = index" [value]="i">
+                    {{year}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngFor="let year of years.slice(this.CoreInformation.get('admissionIntoYear').value);"
+            [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>{{year}} Fee Configuration Name</mat-label>
+            <mat-select [formControlName]="this.commonService.camelize(year)">
+                    <mat-option *ngFor="let feeConfig of feeConfigurations[years.indexOf(year)]" [value]="feeConfig._id">
+                        {{feeConfig.configurationName}}: {{this.reduce(feeConfig.structure) |
+                        currency:"INR":"symbol" }}
+                    </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Faculty</mat-label>
+            <input tabindex="-1" matInput formControlName="faculty" required readonly />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>School</mat-label>
+            <input tabindex="-1" matInput formControlName="school" required readonly />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Department</mat-label>
+            <input tabindex="-1" matInput formControlName="department" required readonly />
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+        <button mat-button matStepperNext>Next</button>
+    </div>
+</form>

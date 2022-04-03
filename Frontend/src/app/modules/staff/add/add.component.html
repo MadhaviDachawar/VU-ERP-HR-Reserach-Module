@@ -1,0 +1,99 @@
+<div style="margin-bottom: 5px;" fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="center">
+    <button (click)="SubmitStaff()" style="width: 120px; height: 3rem; margin-top: 1rem" mat-raised-button
+        color="primary">
+        <ng-container *ngIf="this.staffIdToEdit == undefined">
+            SAVE
+            <mat-icon style="position:relative; top: -1px;" fontSet="material-icons-round">save</mat-icon>
+        </ng-container>
+        <ng-container *ngIf="this.staffIdToEdit != undefined">
+            UPDATE
+            <mat-icon style="position:relative; top: -1px;" fontSet="material-icons-round">update</mat-icon>
+        </ng-container>
+    </button>
+</div>
+
+<mat-horizontal-stepper #stepper [orientation]="(stepperOrientation | async)!">
+    <ng-template matStepperIcon="error" let-index="index">
+        <mat-icon fontSet="material-icons-round">warning</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="edit" let-index="index">
+        <mat-icon fontSet="material-icons-round"> {{ iconNames[index] }}</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="done" let-index="index">
+        <mat-icon fontSet="material-icons-round"> {{ iconNames[index] }}</mat-icon>
+    </ng-template>
+
+    <!-- Core Information -->
+    <mat-step [stepControl]="CoreInformation" state="CoreInformation">
+        <ng-template matStepLabel>Core Information</ng-template>
+        <ng-template matStepperIcon="CoreInformation">
+            <mat-icon fontSet="material-icons-round">info</mat-icon>
+        </ng-template>
+        <app-core-information></app-core-information>
+    </mat-step>
+
+    <!-- Communication Details -->
+    <mat-step [stepControl]="CommunicationDetails" state="CommunicationDetails">
+        <ng-template matStepLabel>Communication Details</ng-template>
+        <ng-template matStepperIcon="CommunicationDetails">
+            <mat-icon fontSet="material-icons-round">contact_phone</mat-icon>
+        </ng-template>
+        <app-communication-details></app-communication-details>
+    </mat-step>
+
+    <!-- Qualification Details -->
+    <mat-step [stepControl]="QualificationDetails" state="QualificationDetails">
+        <ng-template matStepLabel>Qualification Details</ng-template>
+        <ng-template matStepperIcon="QualificationDetails">
+            <mat-icon fontSet="material-icons-round">school</mat-icon>
+        </ng-template>
+        <app-qualification-details></app-qualification-details>
+    </mat-step>
+
+    <!-- Experience Details -->
+    <mat-step [stepControl]="ExperienceDetails" state="ExperienceDetails">
+        <ng-template matStepLabel>Experience Details</ng-template>
+        <ng-template matStepperIcon="ExperienceDetails">
+            <mat-icon fontSet="material-icons-round">collections_bookmark</mat-icon>
+        </ng-template>
+
+        <app-experience-details></app-experience-details>
+    </mat-step>
+
+    <!-- Banking Details -->
+    <mat-step [stepControl]="BankingDetails" state="BankingDetails">
+        <ng-template matStepLabel>Banking Details</ng-template>
+        <ng-template matStepperIcon="BankingDetails">
+            <mat-icon fontSet="material-icons-round">account_balance</mat-icon>
+        </ng-template>
+        <app-banking-details></app-banking-details>
+    </mat-step>
+
+    <!-- Documents -->
+    <mat-step [stepControl]="Documents" state="Documents">
+        <ng-template matStepLabel>Documents</ng-template>
+        <ng-template matStepperIcon="Documents">
+            <mat-icon fontSet="material-icons-round">file_copy</mat-icon>
+        </ng-template>
+
+        <app-documents></app-documents>
+    </mat-step>
+
+    <!-- Personal Details -->
+    <mat-step [stepControl]="PersonalDetails" state="PersonalDetails">
+        <ng-template matStepLabel>Personal Details</ng-template>
+        <ng-template matStepperIcon="PersonalDetails">
+            <mat-icon fontSet="material-icons-round">accessibility_new</mat-icon>
+        </ng-template>
+        <app-personal-details></app-personal-details>
+    </mat-step>
+
+    <!-- Other Information -->
+    <mat-step [stepControl]="OtherInformation" state="OtherInformation">
+        <ng-template matStepLabel>Other Information</ng-template>
+        <ng-template matStepperIcon="OtherInformation">
+            <mat-icon fontSet="material-icons-round">more</mat-icon>
+        </ng-template>
+        <app-other-information></app-other-information>
+    </mat-step>
+</mat-horizontal-stepper>

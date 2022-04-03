@@ -1,0 +1,173 @@
+<form [formGroup]="QualificationDetails">
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <div class="mat-elevation-z0">
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Qualification</mat-label>
+                    <input style="text-transform: capitalize;" type="text" matInput formControlName="Qualification"
+                        [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredQualifications | async" [value]="option.name">
+                            {{option.name}} <span *ngIf="option.required==true">*</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>University</mat-label>
+                    <input matInput formControlName="University" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Passing Year</mat-label>
+                    <input mask="9000" matInput formControlName="PassingYear" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Marks</mat-label>
+                    <input matInput formControlName="Marks" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Out Of</mat-label>
+                    <input matInput formControlName="MaxMarks" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Percentage - %</mat-label>
+                    <input matInput readonly formControlName="Percentage" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Grade</mat-label>
+                    <input matInput formControlName="Grade" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Class</mat-label>
+                    <input matInput formControlName="Class" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Specialization</mat-label>
+                    <input matInput formControlName="Specialization" />
+                </mat-form-field>
+
+                <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput formControlName="Remarks" />
+                </mat-form-field>
+
+                <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="start">
+                    <button (click)="addOtherInformation()" style="margin-top: 9px" mat-icon-button color="accent">
+                        <mat-icon *ngIf="this.editPosition == undefined" fontSet="material-icons-outlined">add_circle
+                        </mat-icon>
+                        <mat-icon *ngIf="this.editPosition !== undefined" fontSet="material-icons-outlined">save
+                        </mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <ng-template [ngIf]="dataSource.data.length > 0">
+            <div class="table-responsive">
+                <table [fxFlex]="100 + '%'" fxFlex.lt-md="100%" mat-table [dataSource]="dataSource"
+                    class="mat-elevation-z0">
+                    <ng-container matColumnDef="Qualification">
+                        <th mat-header-cell *matHeaderCellDef><b>QUALIFICATION</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.Qualification }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="University">
+                        <th mat-header-cell *matHeaderCellDef><b>UNIVERSITY</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.University }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PassingYear">
+                        <th mat-header-cell *matHeaderCellDef><b>PASSING YEAR</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.PassingYear }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Marks">
+                        <th mat-header-cell *matHeaderCellDef><b>MARKS</b></th>
+                        <td mat-cell *matCellDef="let element">{{ element.Marks }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="MaxMarks">
+                        <th mat-header-cell *matHeaderCellDef><b>MAX MARKS</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.MaxMarks }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Percentage">
+                        <th mat-header-cell *matHeaderCellDef><b>PERCENTAGE</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.Percentage }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Grade">
+                        <th mat-header-cell *matHeaderCellDef><b>GRADE</b></th>
+                        <td mat-cell *matCellDef="let element">{{ element.Grade }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Class">
+                        <th mat-header-cell *matHeaderCellDef><b>CLASS</b></th>
+                        <td mat-cell *matCellDef="let element">{{ element.Class }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Specialization">
+                        <th mat-header-cell *matHeaderCellDef><b>SPECIALIZATION</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.Specialization }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Remarks">
+                        <th mat-header-cell *matHeaderCellDef><b>REMARKS</b></th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.Remarks }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Edit">
+                        <th style="width: 50px; text-align: center" mat-header-cell *matHeaderCellDef>
+                            <b>EDIT</b>
+                        </th>
+                        <td style="width: 50px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                            <button (click)="editOtherInformation(i)" mat-icon-button color="warn">
+                                <mat-icon fontSet="material-icons-round">edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Delete">
+                        <th style="width: 50px; text-align: center" mat-header-cell *matHeaderCellDef>
+                            <b>DELETE</b>
+                        </th>
+                        <td style="width: 50px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                            <button (click)="deleteOtherInformation(i)" mat-icon-button color="warn">
+                                <mat-icon fontSet="material-icons-round">delete_forever</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+            </div>
+        </ng-template>
+    </div>
+
+    <div style="padding-top: 25px" fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+    </div>
+</form>

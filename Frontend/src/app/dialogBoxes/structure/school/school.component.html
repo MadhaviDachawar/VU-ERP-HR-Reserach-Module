@@ -1,0 +1,44 @@
+<div mat-dialog-title>
+    <h1 style="margin: 0px;">{{data.action | titlecase}} School</h1>
+    <h4 *ngIf="data.action == 'edit'">{{data.name}}</h4>
+    <h4 *ngIf="data.action == 'add'">{{data.type}}: {{data.name}}</h4>
+</div>
+
+<div mat-dialog-content class="mat-typography" style="padding-bottom: 10px;">
+    <mat-form-field cdkFocusInitial appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.newName">
+    </mat-form-field>
+    <br>
+    <mat-form-field cdkFocusInitial appearance="outline">
+        <mat-label>Code</mat-label>
+        <input matInput [(ngModel)]="data.code">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Director</mat-label>
+        <input matInput [(ngModel)]="data.director">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Mission</mat-label>
+        <input matInput [(ngModel)]="data.mission">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Vision</mat-label>
+        <input matInput [(ngModel)]="data.vision">
+    </mat-form-field>
+    <br>
+</div>
+
+<div mat-dialog-actions style="float: right">
+    <button mat-button color="warn" (click)="onNoClick()"> <b>CANCEL</b> </button>
+
+    <button *ngIf="data.action == 'edit'" mat-button color="primary" [mat-dialog-close]="data">
+        <b>SAVE</b>
+    </button>
+    <button *ngIf="data.action == 'add'" mat-button color="primary" [mat-dialog-close]="data">
+        <b>ADD</b>
+    </button>
+</div>

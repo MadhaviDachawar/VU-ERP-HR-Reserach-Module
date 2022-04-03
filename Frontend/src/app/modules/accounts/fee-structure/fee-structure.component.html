@@ -1,0 +1,8 @@
+<mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)" mat-align-tabs="center" >
+    <mat-tab label="VIEW">
+        <app-view></app-view>
+    </mat-tab>
+    <mat-tab label="ADD">
+        <app-add></app-add>
+    </mat-tab>
+</mat-tab-group>

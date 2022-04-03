@@ -1,0 +1,323 @@
+<form [formGroup]="PersonalDetails">
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center center">
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Blood Group</mat-label>
+            <mat-select formControlName="bloodGroup">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let bloodgroup of BloodGroups" [value]="bloodgroup">
+                    {{ bloodgroup }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Mother Tongue</mat-label>
+            <mat-select formControlName="motherTongue">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let motherTongue of motherTongues" [value]="motherTongue">
+                    {{ motherTongue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender" required>
+                <mat-option>--</mat-option>
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+                <mat-option value="Other">Other</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Place of Birth</mat-label>
+            <input style="text-transform: capitalize;" matInput formControlName="placeOfBirth" required />
+        </mat-form-field>
+
+        <!-- <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Nationality</mat-label>
+            <input style="text-transform: capitalize;" matInput formControlName="nationality" required
+                (change)="this.PersonalDetails.get('nationality').patchValue(this.commonService.capitalizeString(this.PersonalDetails.get('nationality').value))" />
+        </mat-form-field> -->
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Nationality</mat-label>
+            <input #nationality type="text" aria-label="Number" matInput formControlName="nationality"
+                [matAutocomplete]="nationalities" required
+                (change)="this.PersonalDetails.get('nationality').patchValue(this.commonService.capitalizeString(this.PersonalDetails.get('nationality').value))">
+            <button *ngIf="this.PersonalDetails.get('nationality').value.length > 0" matSuffix mat-icon-button
+                (click)="resetNationality()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #nationalities="matAutocomplete">
+                <mat-option *ngFor="let option of filteredCountryList | async" [value]="option.name">
+                    <!-- <countryflag [country]="option.code.toLowerCase()" is-square="true">{{option.name}}<span
+                            class="caret"></span></countryflag> -->
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="this.PersonalDetails.get('nationality').value.toLowerCase() == 'india'" fxFlex.xs="100%"
+            fxFlex.sm="33%" appearance="outline">
+            <mat-label>Domicile State</mat-label>
+            <input #nationality type="text" matInput formControlName="domicileState" [matAutocomplete]="statesOfIndia"
+                required>
+            <mat-autocomplete autoActiveFirstOption #statesOfIndia="matAutocomplete">
+                <mat-option *ngFor="let option of filteredStatesOfIndia | async" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category" required>
+                    {{ category }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Admission Category</mat-label>
+            <mat-select formControlName="admissionCategory" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category" required>
+                    {{ category }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="this.PersonalDetails.controls.nationality.value.toLowerCase() == 'india'"
+            fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Caste</mat-label>
+            <input style="text-transform: capitalize;" matInput formControlName="caste" />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="this.PersonalDetails.controls.nationality.value.toLowerCase() == 'india'"
+            fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Sub Caste</mat-label>
+            <input style="text-transform: capitalize;" matInput formControlName="subCaste" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Religion</mat-label>
+            <mat-select formControlName="religion" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let religion of religions" [value]="religion" required>
+                    {{ religion }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Marital Status</mat-label>
+            <mat-select formControlName="maritalStatus" required>
+                <mat-option>--</mat-option>
+                <mat-option value="Married">Married</mat-option>
+                <mat-option value="Un-Married">Un-Married</mat-option>
+                <mat-option value="Divorced">Divorced</mat-option>
+                <mat-option value="Widowed">Widowed</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>No of Children</mat-label>
+            <mat-select formControlName="noOfChildren" required>
+                <mat-option value="0">0</mat-option>
+                <mat-option value="1">1</mat-option>
+                <mat-option value="2">2</mat-option>
+                <mat-option value="3">3</mat-option>
+                <mat-option value="4">4</mat-option>
+                <mat-option value="5">5</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+    <div style="padding-top: 10px; padding-bottom: 20px;" fxLayout="row wrap" fxLayoutGap="10px grid"
+        fxLayoutAlign="center center">
+
+        <mat-slide-toggle fxFlex.xs="100%" fxFlex.sm="33%" formControlName="covidVaccinated"
+            [checked]="this.PersonalDetails.controls.covidVaccinated.value ? true : false">
+            COVID-19 Vaccinated</mat-slide-toggle>
+
+        <mat-slide-toggle fxFlex.xs="100%" fxFlex.sm="33%" formControlName="physicalDisability"
+            [checked]="this.PersonalDetails.controls.physicalDisability.value ? true : false">
+            Physical Disability</mat-slide-toggle>
+
+        <mat-form-field *ngIf="this.PersonalDetails.controls.physicalDisability.value == true" fxFlex.xs="100%"
+            fxFlex.sm="33%" appearance="outline">
+            <mat-label>Physical Disability Percentage - %</mat-label>
+            <input mask="000" matInput formControlName="physicalDisabilityPercentage" required />
+        </mat-form-field>
+
+    </div>
+</form>
+
+<div style="margin-top: 10px;" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+    <form [formGroup]="FamilyDetailsForm">
+        <div class="mat-elevation-z0" [fxFlex]="100 + '%'" fxFlex.lt-md="100%">
+            <div style="margin: 10px;" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>FAMILY DETAILS</b></H3>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Full Name</mat-label>
+                    <input style="text-transform: capitalize;" matInput formControlName="fullName" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Relation</mat-label>
+                    <input style="text-transform: capitalize;" matInput formControlName="relation" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Profession</mat-label>
+                    <input style="text-transform: capitalize;" matInput formControlName="profession" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Work Experience</mat-label>
+                    <input style="text-transform: capitalize;" matInput formControlName="workExperience" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Company Name</mat-label>
+                    <input style="text-transform: capitalize;" matInput formControlName="companyName" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Annual Income</mat-label>
+                    <mat-select formControlName="annualIncome">
+                        <mat-option>--</mat-option>
+                        <mat-option value="0 to 5 lakhs">0 to 5 lakhs</mat-option>
+                        <mat-option value="5 to 10 lakhs">5 to 10 lakhs</mat-option>
+                        <mat-option value="15 to 20 lakhs">15 to 20 lakhs</mat-option>
+                        <mat-option value="20 to 25 lakhs">20 to 25 lakhs</mat-option>
+                        <mat-option value="25 lakhs and above">25 lakhs and above</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Mobile</mat-label>
+                    <input mask="0000000000" style="text-transform: capitalize;" matInput formControlName="mobile" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="address" />
+                </mat-form-field>
+
+                <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="start">
+                    <button (click)="addFamilyDetail()" style="margin-top: 9px" mat-icon-button color="accent">
+                        <mat-icon *ngIf="this.familyEdit == undefined" fontSet="material-icons-outlined">add_circle
+                        </mat-icon>
+                        <mat-icon *ngIf="this.familyEdit !== undefined" fontSet="material-icons-outlined">save
+                        </mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+    <ng-template [ngIf]="FamilyDetailsDataSource.data.length > 0">
+        <div class="table-responsive">
+            <table [fxFlex]="100 + '%'" fxFlex.lt-md="100%" mat-table [dataSource]="FamilyDetailsDataSource"
+                class="mat-elevation-z0">
+                <ng-container matColumnDef="fullName">
+                    <th mat-header-cell *matHeaderCellDef><b>FULL NAME</b></th>
+                    <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="relation">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>RELATION</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.relation }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="profession">
+                    <th mat-header-cell *matHeaderCellDef><b>PROFESSION</b></th>
+                    <td mat-cell *matCellDef="let element">{{ element.profession }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="workExperience">
+                    <th mat-header-cell *matHeaderCellDef><b>WORK EXPERIENCE</b></th>
+                    <td mat-cell *matCellDef="let element">{{ element.workExperience }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="companyName">
+                    <th mat-header-cell *matHeaderCellDef><b>COMPANY NAME</b></th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.companyName }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mobile">
+                    <th mat-header-cell *matHeaderCellDef><b>MOBILE</b></th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.mobile }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef><b>EMAIL</b></th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.email }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef><b>ADDRESS</b></th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.address }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="edit">
+                    <th style="width: 50px; text-align: center" mat-header-cell *matHeaderCellDef>
+                        <b>EDIT</b>
+                    </th>
+                    <td style="width: 50px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                        <button (click)="editFamilyDetails(i)" mat-icon-button color="accent">
+                            <mat-icon fontSet="material-icons-round">edit</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                    <th style="width: 50px; text-align: center" mat-header-cell *matHeaderCellDef>
+                        <b>DELETE</b>
+                    </th>
+                    <td style="width: 50px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                        <button (click)="deleteFamilyDetail(i)" mat-icon-button color="warn">
+                            <mat-icon fontSet="material-icons-round">delete_forever</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="FamilyDetailsCols"></tr>
+                <tr mat-row *matRowDef="let row; columns: FamilyDetailsCols"></tr>
+            </table>
+        </div>
+    </ng-template>
+</div>
+
+<div style="padding-top: 25px" fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+</div>

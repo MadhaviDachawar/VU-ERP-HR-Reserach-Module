@@ -1,0 +1,110 @@
+<form [formGroup]="CoreInformation">
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Employee Number</mat-label>
+            <input mask="00000" id="employmentNumber" matInput placeholder="Employee Number"
+                formControlName="employmentNumber" required />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input mask="S*" style="text-transform: capitalize;" matInput placeholder="First Name"
+                formControlName="firstName" required
+                (change)="this.CoreInformation.controls.firstName.patchValue(this.CoreInformation.controls.firstName.value.charAt(0).toUpperCase() + this.CoreInformation.controls.firstName.value.slice(1))" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Middle Name</mat-label>
+            <input mask="S*" style="text-transform: capitalize;" matInput placeholder="Middle Name"
+                formControlName="middleName"
+                (change)="this.CoreInformation.controls.middleName.patchValue(this.CoreInformation.controls.middleName.value.charAt(0).toUpperCase() + this.CoreInformation.controls.middleName.value.slice(1))" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input mask="S*" style="text-transform: capitalize;" matInput placeholder="Surname"
+                formControlName="lastName" required
+                (change)="this.CoreInformation.controls.lastName.patchValue(this.CoreInformation.controls.lastName.value.charAt(0).toUpperCase() + this.CoreInformation.controls.lastName.value.slice(1))" />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="dateOfBirth" formControlName="dateOfBirth" required />
+            <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+            <mat-datepicker #dateOfBirth></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Joining Date</mat-label>
+            <input matInput [matDatepicker]="dp" formControlName="joiningDate" required />
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Joining Designation</mat-label>
+            <mat-select formControlName="joiningDesignation">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let designation of designations" [value]="designation" required>
+                    {{ designation }}
+                </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="firstFormGroup.controls.animalControl.hasError('required')">Please choose an animal</mat-error> -->
+            <!-- <mat-hint>{{firstFormGroup.controls.animalControl.value?.sound}}</mat-hint> -->
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Department</mat-label>
+            <input #department type="text" aria-label="Number" matInput formControlName="department"
+                [matAutocomplete]="auto" required>
+            <button *ngIf="this.CoreInformation.controls.department.value.length > 0" matSuffix mat-icon-button
+                (click)="resetDepartment()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredDepartments | async" [value]="option.name">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Faculty</mat-label>
+            <input tabindex="-1" matInput formControlName="faculty" required readonly />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>School</mat-label>
+            <input tabindex="-1" matInput formControlName="school" required readonly />
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Aadhaar Number</mat-label>
+            <input matInput mask="000000000000" placeholder="Employee Number" formControlName="aadhaarNo" required />
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Driving License</mat-label>
+            <input matInput mask="SS-00 00000000000" style="text-transform: uppercase;"
+                placeholder="Driving License Number" formControlName="dlNo" required
+                (change)="this.CoreInformation.controls.dlNo.patchValue(this.CoreInformation.controls.dlNo.value.toUpperCase())" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>PAN Number</mat-label>
+            <input matInput mask="SSSSS0000S" style="text-transform: uppercase;" placeholder="PAN Number"
+                formControlName="panNo" required
+                (change)="this.CoreInformation.controls.panNo.patchValue(this.CoreInformation.controls.panNo.value.toUpperCase())" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Passport Number</mat-label>
+            <input matInput style="text-transform: uppercase;" placeholder="Passport Number" formControlName="passportNo"
+                (change)="this.CoreInformation.controls.passportNo.patchValue(this.CoreInformation.controls.passportNo.value.toUpperCase())" />
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="end">
+        <button mat-button matStepperNext>Next</button>
+    </div>
+</form>

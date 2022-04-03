@@ -1,0 +1,161 @@
+<div style="padding-bottom: 5px;" fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="center">
+    <button (click)="save()"
+        style="width: 120px; height: 3rem; margin-top: 1rem; margin-right: 3px; margin-left: 3px;"
+        mat-raised-button color="primary">SAVE
+        <mat-icon style="position:relative; top: -1px;" fontSet="material-icons-round">save</mat-icon>
+    </button>
+    <button (click)="reset()"
+        style="width: 120px; height: 3rem; margin-top: 1rem; margin-right: 3px; margin-left: 3px;"
+        mat-raised-button color="warn">RESET
+        <mat-icon style="position:relative; top: -1px;" fontSet="material-icons-round">clear</mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="feeStructure">
+    <div class="normalContainer" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <!-- <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+                <mat-label>Academic Year</mat-label>
+                <mat-select formControlName="academicYear">
+                    <mat-option *ngFor="let academicYear of academicYears"
+                        [value]="academicYear.start + '-' + academicYear.end">
+                        {{academicYear.start}} - {{academicYear.end}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+
+        <mat-form-field [fxFlex]="100 / 12 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Academic Year</mat-label>
+            <input id="academicYear" mask="0000-0000" matInput formControlName="academicYear" required />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 4 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Programme</mat-label>
+            <input id="programme" #programme type="text" aria-label="Number" matInput
+                formControlName="programme" [matAutocomplete]="auto" required>
+            <button *ngIf="this.feeStructure.controls.programme.value.length > 0" matSuffix mat-icon-button
+                (click)="resetProgramme()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredProgrammes | async" [value]="option.name">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Faculty</mat-label>
+            <input tabindex="-1" matInput formControlName="faculty" required readonly />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>School</mat-label>
+            <input tabindex="-1" matInput formControlName="school" required readonly />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Department</mat-label>
+            <input tabindex="-1" matInput formControlName="department" required readonly />
+        </mat-form-field>
+
+    </div>
+
+    <div class="normalContainer" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Year</mat-label>
+            <mat-select id="year" formControlName="year">
+                <mat-option *ngFor="let year of years" [value]="year">
+                    {{year}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 6 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Configuration Name</mat-label>
+            <input id="configurationName" style="text-transform: capitalize;"
+                (change)="this.feeStructure.get('configurationName').patchValue(commonService.capitalizeString(this.feeStructure.get('configurationName').value))"
+                matInput formControlName="configurationName" required />
+        </mat-form-field>
+    </div>
+</form>
+
+<form [formGroup]="feeBifurbigation">
+    <div class="normalContainer" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Fee Type</mat-label>
+            <input style="text-transform: capitalize;" id="feeType" matInput formControlName="feeType"
+                (change)="this.feeBifurbigation.get('feeType').patchValue(commonService.capitalizeString(this.feeBifurbigation.get('feeType').value))" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <span *ngIf="!!this.feeBifurbigation.get('amount').value" style="position: relative; top: -5px;"
+                matPrefix>&nbsp;₹</span>
+            <input (focus)="this.selectValue($event)" matInput style="text-align: right;"
+                formControlName="amount" mask="separator.2" thousandSeparator="," />
+        </mat-form-field>
+
+        <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="start">
+            <button (click)="addFeeType()" style="margin-top: 9px" mat-icon-button color="accent">
+                <mat-icon *ngIf="this.editPosition == undefined" fontSet="material-icons-outlined">add_circle
+                </mat-icon>
+                <mat-icon *ngIf="this.editPosition !== undefined" fontSet="material-icons-outlined">save
+                </mat-icon>
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="containerWithRightPadding" fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card [fxFlex]="100 / 2.5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%">
+        <table mat-table [dataSource]="dataSource">
+            <!-- Item Column -->
+            <ng-container matColumnDef="feeType">
+                <th mat-header-cell *matHeaderCellDef> <b>FEE TYPE</b> </th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.feeType}} </td>
+                <td mat-footer-cell *matFooterCellDef> <b>TOTAL</b> </td>
+            </ng-container>
+
+            <!-- Cost Column -->
+            <ng-container matColumnDef="amount">
+                <th style="text-align: right; width: 100px;" mat-header-cell *matHeaderCellDef> <b>AMOUNT</b>
+                </th>
+                <td style="text-align: right; width: 100px;" mat-cell *matCellDef="let transaction">
+                    {{transaction.amount |
+                    currency:"INR":"symbol"}} </td>
+                <td style="text-align: right;" mat-footer-cell *matFooterCellDef> <b>{{getTotalCost() |
+                        currency:"INR":"symbol"}}</b>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+                <th style="width: 100px; text-align: right" mat-header-cell *matHeaderCellDef>
+                    <b>EDIT</b>
+                </th>
+                <td style="width: 100px; text-align: right" mat-cell *matCellDef="let element; let i = index">
+                    <button (click)="editFeeType(i)" mat-icon-button color="accent">
+                        <mat-icon fontSet="material-icons-round">edit</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <th style="width: 100px; text-align: center" mat-header-cell *matHeaderCellDef>
+                    <b>DELETE</b>
+                </th>
+                <td style="width: 100px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                    <button (click)="deleteFeeType(i)" mat-icon-button color="warn">
+                        <mat-icon fontSet="material-icons-round">delete_forever</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+    </mat-card>
+</div>

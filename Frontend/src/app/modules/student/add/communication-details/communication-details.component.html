@@ -1,0 +1,241 @@
+<form [formGroup]="CommunicationDetails">
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <mat-form-field [fxFlex]="100 / 2.5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline"
+            style="height: max-content">
+            <mat-label>Mobile Number(s)</mat-label>
+            <mat-chip-list #MobileNumberList required>
+                <mat-chip *ngFor="let mobilenumber of mobileNumbers" [selectable]="selectable" [removable]="removable"
+                    (removed)="removeMobileNumber(mobilenumber)">
+                    {{ mobilenumber }}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input mask="0000000000" placeholder="Multiple Input..." [matChipInputFor]="MobileNumberList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="addMobileNumber($event)" />
+            </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 2.5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline"
+            style="height: max-content">
+            <mat-label>Email(s)</mat-label>
+            <mat-chip-list #EmailList required>
+                <mat-chip *ngFor="let email of emailIDs" [selectable]="selectable" [removable]="removable"
+                    (removed)="removeEmail(email)">
+                    {{ email }}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Multiple Input..." [matChipInputFor]="EmailList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="addEmail($event)" />
+            </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>VU-Email ID</mat-label>
+            <input id="VUEmailID" style="text-align: right;" matInput placeholder="" formControlName="VUEmailID"
+                required />
+            <span style="position: relative; top: -4px;" matSuffix>@vupune.ac.in</span>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Emergency Contact Name</mat-label>
+            <input matInput placeholder="" formControlName="emergencyContactName" required />
+        </mat-form-field>
+
+        <mat-form-field [fxFlex]="100 / 5 + '%'" fxFlex.xs="100%" fxFlex.sm="33%" appearance="outline">
+            <mat-label>Emergency Contact Number</mat-label>
+            <input mask="0000000000" matInput placeholder=""
+                formControlName="emergencyContactNumber" required />
+        </mat-form-field>
+    </div>
+</form>
+
+<div fxLayout="row wrap" style="padding-top: 10px;" fxLayoutGap="10px grid" fxLayoutAlign="center">
+    <form [formGroup]="AddressForm">
+        <div class="mat-elevation-z0" [fxFlex]="100" fxFlex.lt-md="100">
+            <div style="margin: 1.5rem auto" fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <H3><b>ADDRESS</b></H3>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+                <mat-form-field [fxFlex]="100 / 10 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>Address Type</mat-label>
+                    <mat-select formControlName="AddressType">
+                        <mat-option>--</mat-option>
+                        <mat-option value="Local">Local</mat-option>
+                        <mat-option value="Permanent">Permanent</mat-option>
+                        <mat-option value="Permanent">Local Guardian</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>House/Flat No.</mat-label>
+                    <input matInput formControlName="HouseFlatNo" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>Street Name</mat-label>
+                    <input matInput formControlName="StreetName" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 8 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>Location/Landmark</mat-label>
+                    <input matInput formControlName="LocationLandmark" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 15 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>Pincode</mat-label>
+                    <input matInput formControlName="Pincode" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 9 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>State</mat-label>
+                    <input matInput formControlName="State" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 10 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>District</mat-label>
+                    <input matInput formControlName="District" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 10 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>Tehsil</mat-label>
+                    <input matInput formControlName="Tehsil" />
+                </mat-form-field>
+
+                <mat-form-field [fxFlex]="100 / 10 + '%'" fxFlex.lt-md="100%" appearance="outline">
+                    <mat-label>Village / Town</mat-label>
+                    <input matInput formControlName="VillageTown" />
+                </mat-form-field>
+
+                <div fxLayout="row wrap" fxLayoutGap="0px grid" fxLayoutAlign="start">
+                    <button (click)="addAddress()" style="margin-top: 9px" mat-icon-button color="accent"
+                        [disabled]="!AddressForm.valid">
+                        <mat-icon *ngIf="this.editPosition == undefined" fontSet="material-icons-outlined">
+                            add_circle
+                        </mat-icon>
+                        <mat-icon *ngIf="this.editPosition !== undefined" fontSet="material-icons-outlined">save
+                        </mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <ng-template [ngIf]="dataSource.data.length > 0">
+        <div class="table-responsive">
+            <table [fxFlex]="100 + '%'" fxFlex.lt-md="100%" mat-table [dataSource]="dataSource"
+                class="mat-elevation-z0">
+                <ng-container matColumnDef="AddressType">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "Address Type" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.AddressType }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="HouseFlatNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "House / Flat No." | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.HouseFlatNo }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="StreetName">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "Street name" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.StreetName }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="LocationLandmark">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "Landmark" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.LocationLandmark }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Pincode">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "Pincode" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.Pincode }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="State">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "State" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{ element.State }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="District">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "District" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.District }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Tehsil">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "Tehsil" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{ element.Tehsil }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="VillageTown">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <b>{{ "Village / Town" | uppercase }}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.VillageTown }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Edit">
+                    <th style="width: 50px; text-align: center" mat-header-cell *matHeaderCellDef>
+                        <b>EDIT</b>
+                    </th>
+                    <td style="width: 50px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                        <button (click)="editAddress(i)" mat-icon-button color="accent">
+                            <mat-icon fontSet="material-icons-round">edit</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Delete">
+                    <th style="width: 50px; text-align: center" mat-header-cell *matHeaderCellDef>
+                        <b>DELETE</b>
+                    </th>
+                    <td style="width: 50px; text-align: center" mat-cell *matCellDef="let element; let i = index">
+                        <button (click)="deleteAddress(i)" mat-icon-button color="warn">
+                            <mat-icon fontSet="material-icons-round">delete_forever</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+    </ng-template>
+</div>
+
+<div fxLayout="row wrap" style="padding-top: 20px" fxLayoutGap="0px grid" fxLayoutAlign="end">
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext (click)="checkData()">Next</button>
+</div>

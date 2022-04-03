@@ -1,0 +1,1 @@
+ng serve  > "log.txt" 2>&1
